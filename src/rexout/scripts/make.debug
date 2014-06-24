@@ -1,0 +1,90 @@
+SHELL = /bin/sh
+
+top_srcdir = ..
+
+############################
+# Intended to build debug on mingw systems
+# Validated: 20070709
+############################
+
+CC = gcc
+STRIP = /cygdrive/c/mingw/bin/strip
+STRIP_FLAGS = -s
+STD_FLAGS = -O3 -Wall -fsigned-char -mno-cygwin -ansi -pedantic
+EXEEXT = .exe
+
+STD_DEF = -DSIZEOF_LONG_INT=4  -DMEMWATCH -DMEMWATCH_STDIO -DDEBUG
+STD_INC = -I$(top_srcdir)/memwatch-2.71
+
+STD_LIB = -L$(top_srcdir)/memwatch-2.71 -lmemwatch -L/usr/lib/ -lm
+
+PRJ_NAME = rexout
+
+CFLAGS = $(STD_FLAGS) $(STD_DEF) $(STD_INC)
+MAINFLAGS = $(CFLAGS) -DPKGVERS=\"1.21\" -DPKGDATE=\"20070709\"
+
+############################
+# FILES
+############################
+SOURCE = myassert.c \
+         myutil.c \
+         pack.c \
+         tio3.c \
+         clock.c \
+         wind.c \
+         myerror.c \
+         complex.c \
+         convert.c
+
+OBJECTS = $(SOURCE:.c=.o)
+
+HEADERS = type.h \
+          myassert.h \
+          myutil.h \
+          pack.h \
+          tio3.h \
+          clock.h \
+          myerror.h \
+          complex.h \
+          convert.h \
+          wind.h
+
+MAIN = rexout.c
+
+LIB_DEPENDS = $(top_srcdir)/memwatch-2.71/libmemwatch.a
+
+############################
+# TARGETS
+############################
+all: $(PRJ_NAME)
+
+$(PRJ_NAME): $(OBJECTS) $(MAIN) $(LIB_DEPENDS) $(HEADERS)
+	$(CC) $(MAIN) $(MAINFLAGS) $(LD_FLAGS) $(OBJECTS) $(STD_LIB) -o $(PRJ_NAME)
+	$(STRIP) $(STRIP_FLAGS) $(PRJ_NAME)$(EXEEXT)
+
+install: $(PRJ_NAME)
+	cp $(PRJ_NAME)$(EXEEXT) ../../bin
+
+clean:
+	rm -f *.o *.bak *.BAK *.obj
+	rm -f $(PRJ_NAME)$(EXEEXT)
+
+distclean: clean
+	rm -r -f Makefile
+
+# DIST_DIR is usually set by the calling Makefile... Set a default here.
+package = rexout-1.21
+DIST_DIR = ./$(package)
+DISTRIB = $(SOURCE) $(HEADERS) $(MAIN) Makefile.in
+dist:
+	@if [ ! -d $(DIST_DIR) ]; then mkdir $(DIST_DIR); fi
+	@for file in $(DISTRIB); do cp $$file $(DIST_DIR); done
+	@if [ ! -d $(DIST_DIR)/scripts ]; then mkdir $(DIST_DIR)/scripts; fi
+	@for file in scripts/make*; do cp $$file $(DIST_DIR)/scripts; done
+
+############################
+# SUFFIXES
+############################
+.c.o : $(HEADERS)
+	$(CC) -c $(CFLAGS) $<
+

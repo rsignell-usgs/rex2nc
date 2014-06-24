@@ -1,0 +1,23 @@
+SHELL = /bin/sh
+
+EXEC = ../bin/rexout-1.1
+DIFF = diff -b 
+
+all: test0
+
+test0: $(EXEC)
+	@$(EXEC) ./rexfiles/camilbix.rex pts/bix.pts camil.bix
+	@$(EXEC) ./rexfiles/andrwlft.rex pts/lft.pts andrw.lft
+	@$(EXEC) ./rexfiles/audrybpt.rex pts/bpt.pts audry.bpt
+	@$(EXEC) ./rexfiles/frederic.rex pts/emo.pts frederic.emo
+	@$(DIFF) camil.bix ./answers/style0
+	@$(DIFF) andrw.lft ./answers/style0
+	@$(DIFF) audry.bpt ./answers/style0
+	@$(DIFF) frederic.emo ./answers/style0
+
+clean:
+	rm -f camil.bix
+	rm -f andrw.lft
+	rm -f audry.bpt
+	rm -f frederic.emo
+	rm -f memwatch.log

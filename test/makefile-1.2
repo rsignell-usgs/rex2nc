@@ -1,0 +1,43 @@
+SHELL = /bin/sh
+
+EXEC = ../bin/rexout-1.2
+DIFF = diff -b 
+
+all: test0 test1 test2
+
+test0: $(EXEC)
+	@$(EXEC) -rex ./rexfiles/camilbix.rex -pnt pts/bix.pts -out camil.bix -style 0
+	@$(EXEC) -rex ./rexfiles/andrwlft.rex -pnt pts/lft.pts -out andrw.lft -style 0
+	@$(EXEC) -rex ./rexfiles/audrybpt.rex -pnt pts/bpt.pts -out audry.bpt -style 0
+	@$(EXEC) -rex ./rexfiles/frederic.rex -pnt pts/emo.pts -out frederic.emo -style 0
+	@$(DIFF) camil.bix ./answers/style0
+	@$(DIFF) andrw.lft ./answers/style0
+	@$(DIFF) audry.bpt ./answers/style0
+	@$(DIFF) frederic.emo ./answers/style0
+
+test1: $(EXEC)
+	@$(EXEC) -rex ./rexfiles/camilbix.rex -pnt pts/bix.pts -out camil.bix -style 1
+	@$(EXEC) -rex ./rexfiles/andrwlft.rex -pnt pts/lft.pts -out andrw.lft -style 1
+	@$(EXEC) -rex ./rexfiles/audrybpt.rex -pnt pts/bpt.pts -out audry.bpt -style 1
+	@$(EXEC) -rex ./rexfiles/frederic.rex -pnt pts/emo.pts -out frederic.emo -style 1
+	@$(DIFF) camil.bix ./answers/style1
+	@$(DIFF) andrw.lft ./answers/style1
+	@$(DIFF) audry.bpt ./answers/style1
+	@$(DIFF) frederic.emo ./answers/style1
+
+test2: $(EXEC)
+	@$(EXEC) -rex ./rexfiles/camilbix.rex -pnt pts/bix.pts -bsnDir ../sloshbsn -style 2 -out camil.bix
+	@$(EXEC) -rex ./rexfiles/andrwlft.rex -pnt pts/lft.pts -bsnDir ../sloshbsn -style 2 -out andrw.lft
+	@$(EXEC) -rex ./rexfiles/audrybpt.rex -pnt pts/bpt.pts -bsnDir ../sloshbsn -style 2 -out audry.bpt
+	@$(EXEC) -rex ./rexfiles/frederic.rex -pnt pts/emo.pts -bsnDir ../sloshbsn -style 2 -out frederic.emo
+	@$(DIFF) camil.bix ./answers/style2
+	@$(DIFF) andrw.lft ./answers/style2
+	@$(DIFF) audry.bpt ./answers/style2
+	@$(DIFF) frederic.emo ./answers/style2
+
+clean:
+	rm -f camil.bix
+	rm -f andrw.lft
+	rm -f audry.bpt
+	rm -f frederic.emo
+	rm -f memwatch.log
