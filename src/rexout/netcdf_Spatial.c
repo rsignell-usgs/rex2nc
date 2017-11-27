@@ -12,7 +12,6 @@ static void netcdf_UpdateTimeUnitsSpatial(int year, int month, int day,  int hou
 static void netcdf_SetVerticalDatumSpatial(int VerticalDatumFlag) {}
 static void netcdf_ConvertUnitsSpatial(short int imxb, short int jmxb, point_type *pts) {}
 static void netcdf_OutputDataSpatial(short int imxb, short int jmxb, point_type *pts) {}
-static void netcdf_UpdateTimeUnitsSpatial(int year, int month, int day,  int hour, int min, int sec) {}
 static void netcdf_CloseSpatial() {}
 static void netcdf_DatatypeFreeSpatial() {}
 static void netcdf_WriteHeaderSpatial(short int imxb, short int jmxb) {}
