@@ -7,8 +7,8 @@ Simply using "./configure" will NOT compile the code using the netcdf routines i
 
 If one wants NetCDF support, one must supply the needed NetCdf configuration information to the configure script (as what NETCDF=enable would normally do) derived from the 32-bit version of nc-config. 
 
-I put the needed info in another script and ran the configure script from this one An example of such a script appears below. Not how I specifically defined the HAVE_NETCDF_SUPPORT CPP variable to ensure the correct parts of the code get compiled.
+I put the needed info in [another script](./src/run_configure.sh) which specifies variables and then runs configure.  Not how I specifically defined the HAVE_NETCDF_SUPPORT CPP variable to ensure the correct parts of the code get compiled.
 
-Don't forget, one must build a 32-bit executable...which means one must use the nc-config program from a 32-bit install of NetCdf (Yes, I'm mentioning this 3x because its important)
+Don't forget, one must build a 32-bit executable...which means one must use the nc-config program from a 32-bit install of NetCDF.
 
 jrd
